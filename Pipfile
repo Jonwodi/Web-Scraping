@@ -5,8 +5,8 @@ name = "pypi"
 
 [packages]
 selenium = "*"
-beautifulsoup4 = "*"
 webdriver-manager = "*"
+
 
 [dev-packages]
 isort = "==5.2.1"
