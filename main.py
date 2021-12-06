@@ -8,21 +8,21 @@ from webdriver_manager.chrome import ChromeDriverManager
 SERVICE = Service(ChromeDriverManager().install())
 browser1 = webdriver.Chrome(service=SERVICE)
 
-# getting url of website being scraped
+# get website url
 browser1.get("https://www.hyperoptic.com/offer/")
 
-# code used to find accept cookies button using xpath
+# locate accept cookies button
 accept_cookies = browser1.find_element(
     By.XPATH, '//*[@id="cookiePolicyModal"]/div/div/div[3]/button[1]'
 )
 
-# click function used to click on accept cookies button
+# click on accept cookies button
 accept_cookies.click()
 
-# code used to allow webdriver to allow continue search for elements in seconds before element is found or  a NoSuchElementException error is thrown.
+# time in seconds given for the search or poll document object model of html page before a element is found or an error is returned
 browser1.implicitly_wait(30)
 
-# empty list where all data, scraped from the web is added into
+# empty list where all data, scraped from the url is appended into
 deals = []
 
 # deal name
@@ -42,27 +42,26 @@ for index, price in enumerate(deal_prices):
 deal_speed_and_setup = browser1.find_elements(
     By.CLASS_NAME, "flat-text-bellow-price-wr",
 )
-
 for index, speed_and_cost in enumerate(deal_speed_and_setup):
     deals[index]["deal speed"] = speed_and_cost.text.splitlines()[1]
     deals[index]["deal setup cost"] = speed_and_cost.text.splitlines()[3]
 
 
+# print heading for deals
+print("_____")
+print("Deals")
+print("_____")
+
 # deal contract length
 deal_contract_length = browser1.find_elements(
     By.CLASS_NAME, "bold-text-bellow-price-wr"
 )
-
-
-print("_____")
-print("Deals")
-print("_____")
 for index, contract in enumerate(deal_contract_length):
     deals[index]["deal contract"] = contract.text
 
-# code used to print the deals list and its data in more json like structure
+# return deals list data into the terminal in JSON like structure
 pp = pprint.PrettyPrinter(indent=5)
 pp.pprint(deals)
 
-# code used to quit browser / close chrome web browser
+# quit chrome web browser
 browser1.quit()

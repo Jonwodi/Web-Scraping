@@ -11,46 +11,52 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 service = Service(ChromeDriverManager().install())
 browser2 = webdriver.Chrome(service=service)
+
+# get website url
 browser2.get("https://www.bt.com/products/broadband/deals")
 
-# code used to switch from current_url into iframe element that contains accept cookies link
-WebDriverWait(browser2, 10).until(
+# switch from main document body into iframe document body
+iframe = WebDriverWait(browser2, 10).until(
     EC.frame_to_be_available_and_switch_to_it(
         (By.XPATH, "/html/body/div[3]/div/iframe")
     )
 )
 
-# code used to click on accept cookies link that is within iframe element
-WebDriverWait(browser2, 10).until(
-    EC.element_to_be_clickable((By.XPATH, "/html/body/div[8]/div[1]/div/div[3]/a[1]"))
-).click()
+# locate accept cookies link that is within iframe element and click on it
+accept_cookies = (
+    WebDriverWait(browser2, 10)
+    .until(
+        EC.element_to_be_clickable(
+            (By.XPATH, "/html/body/div[8]/div[1]/div/div[3]/a[1]")
+        )
+    )
+    .click()
+)
 
-# code used to exit iframe element to main body html element
+# exit iframe document body into orginal website document body
 browser2.switch_to.default_content()
 
 
-# code used to locate postcode search input box
+# locate postcode search input field box
 form_postcode_input = browser2.find_element(
     By.XPATH,
     "/html/body/div[1]/div[2]/div[3]/div/div/div[2]/div/div/div/div[3]/div[2]/div/form/div/div/input",
 )
 
-# code used to enter postcode
+# enter postcode into search input field box
 form_postcode_input.send_keys("SE18 1EH")
 
-# code used to find form submit button
-form_btn = browser2.find_element(
+# locate postcode search submit button
+postcode_form_btn = browser2.find_element(
     By.XPATH,
     "/html/body/div[1]/div[2]/div[3]/div/div/div[2]/div/div/div/div[3]/div[2]/div/form/div/button",
 )
 
-# code used to click on postcode form submit button
-form_btn.click()
+# submit postcode form / click postcode search button
+postcode_form_btn.click()
 
 
-# problem not resolved
-# dropdown_select = browser2.find_element(By.CLASS_NAME, "jss1970")
-dropdown_select = WebDriverWait(browser2, 10).until(
+dropdown_select = WebDriverWait(browser2, 20).until(
     EC.element_to_be_clickable(
         (
             By.XPATH,
@@ -58,14 +64,16 @@ dropdown_select = WebDriverWait(browser2, 10).until(
         )
     )
 )
+
+# select address dropdown
 dropdown_select = Select(dropdown_select)
+
+# click on / select this address
 dropdown_select.select_by_visible_text("101 Brookdene Road, Woolwich, London, SE18 1EH")
 
-WebDriverWait(browser2, 20).until(
-    EC.invisibility_of_element((By.CSS_SELECTOR, "div.loadingWhiteBox"))
-)
 
-select_form_btn = WebDriverWait(browser2, 10).until(
+# locate address submit form button
+select_form_btn = WebDriverWait(browser2, 20).until(
     EC.element_to_be_clickable(
         (
             By.XPATH,
@@ -73,16 +81,30 @@ select_form_btn = WebDriverWait(browser2, 10).until(
         )
     )
 )
-# select_form_btn.click()
-# select_form_btn.send_keys(Keys.RETURN)
+
+# submit address form
+select_form_btn.click()
 
 
-deals2 = []
+browser2.implicitly_wait(10)
+
+# locate pop up box
+close_popup = WebDriverWait(browser2, 10).until(
+    EC.element_to_be_clickable((By.CLASS_NAME, "closeChatInvite",))
+)
+
+# close pop box
+close_popup.click()
+
+browser2.implicitly_wait(40)
+
+# problem code
+# z = browser2.find_element(By.XPATH, '//*[@id="product-name"]')
+# print(z.text)
+# deals2 = []
 
 # deal name
-deal_name2 = browser2.find_element(By.LINK_TEXT, "Fibre Essential ",)
-for name2 in deal_name2:
-    print(name2.text)
+# deal_name2 = browser2.find_elements(By.CLASS_NAME, "jss2269 ",)
 # for name2 in deal_name2:
 #     deals2.append({"deal name": name2.text})
 
@@ -119,9 +141,7 @@ for name2 in deal_name2:
 # for index, speed2 in enumerate(deal_speed2):
 #     deals2[index]["deal speed"] = speed2.text
 
-pp = pprint.PrettyPrinter(indent=5)
-pp.pprint(deals2)
+# pp = pprint.PrettyPrinter(indent=5)
+# pp.pprint(deals2)
 # browser2.quit()
-
-browser2.implicitly_wait(10)
 
