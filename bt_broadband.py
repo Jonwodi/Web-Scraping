@@ -3,7 +3,6 @@ import pprint
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.ui import WebDriverWait
@@ -89,59 +88,52 @@ select_form_btn.click()
 browser2.implicitly_wait(10)
 
 # locate pop up box
-close_popup = WebDriverWait(browser2, 10).until(
-    EC.element_to_be_clickable((By.CLASS_NAME, "closeChatInvite",))
-)
+# close_popup = WebDriverWait(browser2, 10).until(
+#     EC.element_to_be_clickable((By.CLASS_NAME, "closeChatInvite",))
+# )
 
 # close pop box
-close_popup.click()
+# close_popup.click()
 
 browser2.implicitly_wait(40)
 
-# problem code
-# z = browser2.find_element(By.XPATH, '//*[@id="product-name"]')
-# print(z.text)
-# deals2 = []
+# empty list used to add deal data
+deals2 = []
 
 # deal name
-# deal_name2 = browser2.find_elements(By.CLASS_NAME, "jss2269 ",)
-# for name2 in deal_name2:
-#     deals2.append({"deal name": name2.text})
+deal_name2 = browser2.find_elements(By.ID, "product-name",)
+for name2 in deal_name2:
+    deals2.append({"deal name": name2.text})
+
 
 # deal price
-# deal_prices = browser2.find_elements(By.CLASS_NAME, "price",)
-# for index, price in enumerate(deal_prices):
-#     deals2[index]["deal price"] = price.text
+deal_prices = browser2.find_elements(By.ID, "product-price",)
+for index, price in enumerate(deal_prices):
+    deals2[index]["deal price"] = price.text
 
 
-# deal speed & setup cost
-# deal_speed_and_setup = browser2.find_elements(
-#     By.CLASS_NAME, "flat-text-bellow-price-wr",
-# )
-
-# for index, speed_and_cost in enumerate(deal_speed_and_setup):
-#     deals2[index]["deal speed"] = speed_and_cost.text.splitlines()[1]
-#     deals2[index]["deal setup cost"] = speed_and_cost.text.splitlines()[3]
+# deal setup cost
+deal_setup_cost = browser2.find_elements(By.ID, "upfront-cost",)
+for index, setup in enumerate(deal_setup_cost):
+    deals2[index]["deal setup cost"] = setup.text
 
 
 # deal contract length
-# deal_contract_length = browser2.find_elements(
-#     By.CLASS_NAME, "bold-text-bellow-price-wr"
-# )
-# print("_____")
-# print("Deals")
-# print("_____")
-# for index, contract in enumerate(deal_contract_length):
-#     deals2[index]["deal contract"] = contract.text
+deal_contract_length = browser2.find_elements(By.ID, "contract-length")
+for index, contract in enumerate(deal_contract_length):
+    deals2[index]["deal contract"] = contract.text
 
-# deal_speed2 = browser2.find_elements(
-#     By.XPATH,
-#     "/html/body/div[1]/div[2]/div[4]/div[2]/div[1]/div[1]/div/div/div/div/div[1]/div/div[2]/div/div/span",
-# )
-# for index, speed2 in enumerate(deal_speed2):
-#     deals2[index]["deal speed"] = speed2.text
+print("_______________________")
+print("BT Broadband only deals")
+print("_______________________")
 
-# pp = pprint.PrettyPrinter(indent=5)
-# pp.pprint(deals2)
-# browser2.quit()
+# deal speed
+deal_speed1 = browser2.find_elements(By.CLASS_NAME, "jss896",)
+for index, speed1 in enumerate(deal_speed1):
+    deals2[index]["deal speed"] = speed1.text
 
+
+pp = pprint.PrettyPrinter(indent=5)
+pp.pprint(deals2)
+
+browser2.quit()

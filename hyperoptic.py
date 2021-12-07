@@ -48,9 +48,9 @@ for index, speed_and_cost in enumerate(deal_speed_and_setup):
 
 
 # print heading for deals
-print("_____")
-print("Deals")
-print("_____")
+print("__________________________")
+print("Hyperoptic Broadband deals")
+print("__________________________")
 
 # deal contract length
 deal_contract_length = browser1.find_elements(
