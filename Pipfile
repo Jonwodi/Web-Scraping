@@ -6,7 +6,7 @@ name = "pypi"
 [packages]
 selenium = "*"
 webdriver-manager = "*"
-
+pandas = "*"
 
 [dev-packages]
 isort = "==5.2.1"

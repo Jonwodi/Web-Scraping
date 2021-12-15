@@ -1,5 +1,6 @@
 import pprint
 
+import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -115,7 +116,10 @@ for index, price in enumerate(deal_prices):
 # deal setup cost
 deal_setup_cost = browser2.find_elements(By.ID, "upfront-cost",)
 for index, setup in enumerate(deal_setup_cost):
-    deals2[index]["deal setup cost"] = setup.text
+    deals2[0]["deal setup cost"] = setup.text
+deal_setup_cost2 = browser2.find_elements(By.ID, "upfront-section",)
+for index, setup in enumerate(deal_setup_cost2):
+    deals2[1]["deal setup cost"] = setup.text
 
 
 # deal contract length
@@ -135,5 +139,7 @@ for index, speed1 in enumerate(deal_speed1):
 
 pp = pprint.PrettyPrinter(indent=5)
 pp.pprint(deals2)
-
+print("\n")
+df = pd.DataFrame(deals2)
+pp.pprint(df)
 browser2.quit()

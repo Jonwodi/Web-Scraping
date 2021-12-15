@@ -1,5 +1,6 @@
 import pprint
 
+import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
@@ -62,6 +63,12 @@ for index, contract in enumerate(deal_contract_length):
 # return deals list data into the terminal in JSON like structure
 pp = pprint.PrettyPrinter(indent=5)
 pp.pprint(deals)
+print("\n")
+
+# returns data in pandas DataFrame structure
+df = pd.DataFrame(deals)
+pp.pprint(df)
 
 # quit chrome web browser
 browser1.quit()
+
