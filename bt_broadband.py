@@ -140,6 +140,8 @@ for index, speed1 in enumerate(deal_speed1):
 pp = pprint.PrettyPrinter(indent=5)
 pp.pprint(deals2)
 print("\n")
-df = pd.DataFrame(deals2)
+
+df = pd.DataFrame(deals2, index=["deal 1", "deal 2"])
 pp.pprint(df)
+
 browser2.quit()

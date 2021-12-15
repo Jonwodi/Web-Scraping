@@ -65,10 +65,8 @@ pp = pprint.PrettyPrinter(indent=5)
 pp.pprint(deals)
 print("\n")
 
-# returns data in pandas DataFrame structure
-df = pd.DataFrame(deals)
+# returns data in pandas DataFrame structure with a named indexes for deals
+df = pd.DataFrame(deals, index=["deal 1", "deal 2", "deal 3", "deal 4"])
 pp.pprint(df)
-
 # quit chrome web browser
 browser1.quit()
-
